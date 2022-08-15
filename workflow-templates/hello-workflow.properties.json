@@ -1,0 +1,13 @@
+{
+    "name": "Hello Synapse Starter Workflow",
+    "description": "Test for organization starter workflow.",
+    "iconName": "example-icon",
+    "categories": [
+        "Go"
+    ],
+    "filePatterns": [
+        "package.json$",
+        "^Dockerfile",
+        ".*\\.md$"
+    ]
+}
