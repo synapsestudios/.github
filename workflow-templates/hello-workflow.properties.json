@@ -1,7 +1,7 @@
 {
     "name": "Hello Synapse Starter Workflow",
     "description": "Test for organization starter workflow.",
-    "iconName": "../workflow_icons/startup_hex",
+    "iconName": "./workflow-icons/startup_hex",
     "categories": [
         "Go"
     ],
