@@ -1,0 +1,39 @@
+# Go Tests Starter Workflow Template
+# Remove comments before committing
+
+# [ $string ] is a placeholder for starter workflows and not an array
+# You must replace the entire character sequence, including the brackets
+
+name: Terraform Tests
+on:
+  pull_request:
+    # `$default-branch` is not actually valid workflow syntax. 
+    # It is only valid for workflow templates and cannot be copied verbatim into regular workflow files.
+    branches: [ $default-branch ]
+jobs:
+  go-tests:
+    name: Run Go Terraform Tests
+    runs-on: ubuntu-latest
+    # If you wish to tests multiple test suite directories and/or multiple fixture directories
+    # use the matrix strategy as shown in the following lines.  Both are not required.
+    # strategy:
+        # matrix:
+            # fixtures: [ 'fixture-directory-1-path', 'fixture-directory-2-path],
+            # tests: [ 'test-directory-1-path', 'test-directory-2-path' ]
+    steps:
+      - uses: synapsestudios/run-terraform-test-suite@main
+        with:
+          # replace this with the version of go you wish to use
+          go-version: [ $go-version ]
+          # replace this with the version of terraform you wish to use
+          terraform-version: [ $terraform-version ]
+          # replace this with your fixtures directory path string
+          # OR use the matrix strategy for an array of tests, e.g.
+          # fixtures-directory: ${{ matrix.fixtures }}
+          fixtures-directory: [ $fixtures-directory ]
+          # replace this with your tests directory path string
+          # OR use the matrix strategy for an array of tests, e.g.
+          # test-files-directory: $${{ matrix.tests }}
+          test-files-directory: [ $tests-directory ]
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
