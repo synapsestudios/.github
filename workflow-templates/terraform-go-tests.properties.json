@@ -1,0 +1,8 @@
+{
+    "name": "Run Terraform Go Tests",
+    "description": "Run projects Go test suite on Terraform infrastructure",
+    "iconName": "startup_hex",
+    "categories": [
+        "Go"
+    ]
+}
