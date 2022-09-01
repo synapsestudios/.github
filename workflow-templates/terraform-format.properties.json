@@ -1,0 +1,11 @@
+{
+    "name": "Terraform Format",
+    "description": "Format Terraform files",
+    "iconName": "startup_hex",
+    "categories": [
+        "Terraform"
+    ],
+    "filePatterns": [ 
+        ".*\\.tf$"
+    ]
+}
