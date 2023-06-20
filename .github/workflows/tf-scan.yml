@@ -15,13 +15,13 @@ jobs:
         uses: actions/checkout@master
 
       - name: Echo directory
-        run: echo ${{ github.event.inputs.directory }}
+        run: echo ${{ inputs.directory }}
 
       - name: Run Checkov action
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: ${{ github.event.inputs.directory }}
+          directory: ${{ inputs.directory }}
           framework: terraform # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
           output_format: sarif # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
           output_file_path: results/tfresults.sarif
