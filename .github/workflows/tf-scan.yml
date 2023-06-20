@@ -14,6 +14,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@master
 
+      - name: Echo directory
+        run: echo ${{ github.event.inputs.directory }}
+
       - name: Run Checkov action
         id: checkov
         uses: bridgecrewio/checkov-action@master
