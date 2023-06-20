@@ -5,7 +5,6 @@ on:
       directory:
         type: string
         description: "Directory to scan"
-        required: true
         default: "."
 jobs:
   checkov-job:
