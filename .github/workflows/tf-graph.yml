@@ -1,0 +1,56 @@
+# This workflow generates a Terraform graph and converts it to SVG format.
+# It is triggered by a workflow call and requires the version of Terraform to be specified as an input.
+# The generated graph is then pushed back to the pull request branch.
+name: "Generate Terraform graph"
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        type: string
+        description: "Version of terraform to use"
+        required: true
+      graph_name:
+        type: string
+        description: "Name of the graph to generate"
+        default: "graph.svg"
+jobs:
+  terraform:
+    name: "Generate Terraform graph"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: ${{ github.event.inputs.terraform_version }}
+          terraform_wrapper: false # This speeds up the setup process
+
+      - name: Terraform Init
+        run: "terraform init -input=false -no-color"
+
+      - name: Install graphviz
+        run: "sudo apt-get install -y graphviz"
+
+      - name: Terraform Graph
+        id: graph
+        run: terraform graph > graph.dot
+
+      - name: Convert Graph to SVG
+        id: graph_convert
+        run: dot -Tsvg graph.dot > ${{ github.event.inputs.graph_name }}
+
+      - name: Push changes back to PR branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update ${{ github.event.inputs.graph_name }}"
+          file_pattern: ${{ github.event.inputs.graph_name }}
