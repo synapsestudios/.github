@@ -32,7 +32,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
         with:
-          terraform_version: ${{ github.event.inputs.terraform_version }}
+          terraform_version: ${{ inputs.terraform_version }}
           terraform_wrapper: false # This speeds up the setup process
 
       - name: Terraform Init
@@ -47,10 +47,10 @@ jobs:
 
       - name: Convert Graph to SVG
         id: graph_convert
-        run: dot -Tsvg graph.dot > ${{ github.event.inputs.graph_name }}
+        run: dot -Tsvg graph.dot > ${{ inputs.graph_name }}
 
       - name: Push changes back to PR branch
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Update ${{ github.event.inputs.graph_name }}"
-          file_pattern: ${{ github.event.inputs.graph_name }}
+          commit_message: "Update ${{ inputs.graph_name }}"
+          file_pattern: ${{ inputs.graph_name }}
