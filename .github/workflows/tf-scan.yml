@@ -6,6 +6,10 @@ on:
         type: string
         description: "Directory to scan"
         default: "."
+      scan-modules:
+        type: boolean
+        description: "Scan external modules. This will cause soft fail to be enabled due to this issue: https://github.com/bridgecrewio/checkov/issues/4366"
+        default: false
 jobs:
   checkov-job:
     runs-on: ubuntu-latest
@@ -23,4 +27,5 @@ jobs:
           framework: terraform # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
           output_format: cli # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
           output_file_path: console
-          download_external_modules: true
+          download_external_modules: ${{ inputs.scan-modules }}
+          soft_fail: ${{ !inputs.scan-modules }}
