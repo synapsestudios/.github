@@ -10,6 +10,10 @@ on:
         type: boolean
         description: "Scan external modules. This will cause soft fail to be enabled due to this issue: https://github.com/bridgecrewio/checkov/issues/4366"
         default: false
+      soft-fail:
+        type: boolean
+        description: "Soft fail on issues"
+        default: false
 jobs:
   checkov-job:
     runs-on: ubuntu-latest
@@ -28,4 +32,4 @@ jobs:
           output_format: cli # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
           output_file_path: console
           download_external_modules: ${{ inputs.scan-modules }}
-          soft_fail: ${{ !inputs.scan-modules }}
+          soft_fail: ${{ inputs.scan-modules || inputs.soft-fail }}
