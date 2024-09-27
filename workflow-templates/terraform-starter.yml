@@ -1,0 +1,65 @@
+# Terraform Format Starter Workflow Template
+# Remove comments before committing
+
+name: "Terraform All Branches"
+on:
+  push:
+    branches:
+      - "*"
+      - "*/*"
+      - "**" 
+  pull_request:
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
+
+jobs:
+  terraform_format_check:
+    name: "Terraform Format Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: test
+        run: pwd
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          # specify terraform version
+          terraform_version: [ $terraform-version ]
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+  tfsec-pr-commenter:
+    tfsec:
+    name: tfsec PR commenter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+      - name: tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        with:
+          github_token: ${{ github.token }}
+  terraform-docs:
+    needs: [terraform-format-test, tfsec-pr-commenter]
+    docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Render terraform docs inside the README.md and push changes back to PR branch
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          working-dir: .
+          output-file: README.md
+          output-method: inject
+          git-push: "true"

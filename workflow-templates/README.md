@@ -1,88 +1,43 @@
-# Creating and Using Starter Workflows
+# Synapse Workflow Templates
 
-## Creating starter workflows
+Starter workflows for new and existing projects are contained within this repository.  This repository is separate from Terraform infrastructure - those modules live in separate repos.  A list of all existing workflows is under [`Workflow Directory`](#workflow-directory).
 
-Full documentation can be found [here](https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization)
+## Table of Contents
+* [How to Use](#how-to-use)
+* [Project Starters](#project-starters)
+* [Workflow Directory](#workflow-directory)
+* [Creating new starter workflows](#creating-new-starter-workflows)
 
-> Note: To avoid duplication among starter workflows you can call reusable workflows from within a workflow. This can help make your workflows easier to maintain. For more information, see "Reusing workflows."
+## How to Use
 
-This procedure demonstrates how to create a starter workflow and metadata file. The metadata file describes how the starter workflows will be presented to users when they are creating a new workflow.
+To add one of these workflows to a project, go to the main repository page and click the `Actions` tab:
 
-### 1. Create your new workflow file inside the workflow-templates directory.  
----
-If you need to refer to a repository's default branch, you can use the `$default-branch` placeholder. When a workflow is created the placeholder will be automatically replaced with the name of the repository's default branch.
+![Screenshot 2022-09-29 170216](https://user-images.githubusercontent.com/18317174/193164173-3c351de9-b450-46c7-83a6-6d36c85ea477.png)
 
-For example, this file named `octo-organization-ci.yml` demonstrates a basic workflow.
+You'll be presented with a page that shows all the current workflows for the repository.  Click on the `New workflow` button near the top of the display: 
 
-```
-name: Octo Organization CI
+![Screenshot 2022-09-29 171547](https://user-images.githubusercontent.com/18317174/193164175-0eee5534-feaf-4b58-ae1c-eeeff3830d4c.png)
 
-on:
-  push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+This will navigate you to the public registry of workflows.  There is a convenient search bar to find the workflow you are looking for, and scrolling down you will be presented with a section titled `By Synapse Studios` containing the organizations starter workflows.  Find the workflow you want and select `Configure`:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+![Screenshot 2022-09-29 172040](https://user-images.githubusercontent.com/18317174/193164176-52a6ecfe-b219-4f20-a050-e69380b18004.png)
 
-    steps:
-      - uses: actions/checkout@v3
+This will take you to an editor page where you can modify the workflow accordingly.  Update any placeholder variables, remove comments, and then commit the change via a new branch by clicking the `Start commit` button near the top right of the page:
 
-      - name: Run a one-line script
-        run: echo Hello from Octo Organization
-```
+![Screenshot 2022-09-29 172455](https://user-images.githubusercontent.com/18317174/193164511-edef97cb-3699-44d5-b63d-e324eb3b3203.png)
 
-### 2. Create a metadata file inside the `workflow-templates` directory. 
---- 
-The metadata file must have the same name as the workflow file, but instead of the `.yml` extension, it must be appended with `.properties.json`. For example, this file named `octo-organization-ci.properties.json` contains the metadata for a workflow file named `octo-organization-ci.yml`:
-```
-{
-    "name": "Octo Organization Workflow",
-    "description": "Octo Organization CI starter workflow.",
-    "iconName": "example-icon",
-    "categories": [
-        "Go"
-    ],
-    "filePatterns": [
-        "package.json$",
-        "^Dockerfile",
-        ".*\\.md$"
-    ]
-}
-```
+Any further changes necessary for the workflow can be made on the branch in a local editor.
 
-### Metadata fields
-- `name` - Required. The name of the workflow. This is displayed in the list of available workflows.
-- `description` - Required. The description of the workflow. This is displayed in the list of available workflows.
-- `iconName` - Optional. Specifies an icon for the workflow that's displayed in the list of workflows. The `iconName` must be the name of an SVG file, without the file name extension, stored in the `workflow-templates` directory. For example, an SVG file named `example-icon.svg` is referenced as `example-icon`.
-- `categories` - Optional. Defines the language category of the workflow. When a user views the available starter workflows for a repository, the workflows that match the identified language for the project are featured more prominently. For information on the available language categories, see https://github.com/github/linguist/blob/master/lib/linguist/languages.yml.
-- `filePatterns` - Optional. Allows the workflow to be used if the user's repository has a file in its root directory that matches a defined regular expression.
+## Project Starters
 
-To add another starter workflow, add your files to the same workflow-templates directory.
+For starting a new project, the following starter workflows are recommended:
 
-## Using Starter Workflows
 
-Full documentation can be found [here](https://docs.github.com/en/actions/using-workflows/using-starter-workflows)
 
-Anyone with write permission to a repository can set up GitHub Actions starter workflows for CI/CD or other automation.
+## Workflow Directory
 
-1. On GitHub.com, navigate to the main page of the repository.
+Below are a list of existing starter workflows.  Before adding a new workflow, check to see if it exists, and then update this `README` documentation as necessary.
 
-2. Under your repository name, click the
-Actions tab in the main repository navigation
+## Creating new starter workflows
 
-3. If you already have a workflow in your repository, click New workflow.
-
-4. The "Choose a workflow" page shows a selection of recommended starter workflows. Find the starter workflow that you want to use, then click `Configure`. To help you find the starter workflow that you want, you can search for keywords or filter by category.
-
-5. If the starter workflow contains comments detailing additional setup steps, follow these steps. Many of the starter workflow have corresponding guides. For more information, see the [GitHub Actions guides](https://docs.github.com/en/actions/guides).
-
-6. Some starter workflows use secrets. For example, `${{ secrets.npm_token }}`. If the starter workflow uses a secret, store the value described in the secret name as a secret in your repository. For more information, see "[Encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)."
-
-7. Optionally, make additional changes. For example, you might want to change the value of `on` to change when the workflow runs.
-
-8. Click `Start commit`.
-
-9. Write a commit message and decide whether to commit directly to the default branch or to open a pull request.
+If you wish to create a new starter workflow, [follow this documentation](./docs/creating-new-workflows.md).  Add any additional documentation as necessary, and update this `README` file accordingly.
